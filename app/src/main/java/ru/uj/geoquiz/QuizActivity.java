@@ -11,7 +11,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
 
-    private Question[] mQuestionBank = new Question[] {
+    private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_australia, true),
             new Question(R.string.question_oceans, true),
             new Question(R.string.question_mideast, false),
@@ -38,8 +38,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void onClickNext(View view) {
-        mCurrentIndex = (mCurrentIndex + 1);
-        mCurrentIndex = mCurrentIndex % mQuestionBank.length;
+        mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
         updateQuestion();
     }
 
@@ -62,4 +61,11 @@ public class QuizActivity extends AppCompatActivity {
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
+    public void onClickPrev(View view) {
+        mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
+        if (mCurrentIndex == -1) {
+            mCurrentIndex = mQuestionBank.length - 1;
+        }
+        updateQuestion();
+    }
 }
