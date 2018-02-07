@@ -7,10 +7,14 @@ package ru.uj.geoquiz;
 public class Question {
     private int mTextResId;
     private boolean mAnswerTrue;
+    private boolean mIsAnswered;
+    private boolean mQuestionAnsweredTrue;
 
-    public Question(int textResId, boolean answerTrue) {
+    public Question(int textResId, boolean answerTrue, boolean isAnswered, boolean QuestionAnsweredTrue) {
         mTextResId = textResId;
         mAnswerTrue = answerTrue;
+        mIsAnswered = isAnswered;
+        mQuestionAnsweredTrue = QuestionAnsweredTrue;
     }
 
     public int getTextResId() {
@@ -27,5 +31,21 @@ public class Question {
 
     public void setAnswerTrue(boolean answerTrue) {
         mAnswerTrue = answerTrue;
+    }
+
+    public boolean isAnswered() {
+        return mIsAnswered;
+    }
+
+    public void setAnswered(boolean answered) {
+        mIsAnswered = answered;
+    }
+
+    public boolean isQuestionAnsweredTrue() {
+        return mQuestionAnsweredTrue;
+    }
+
+    public void setQuestionAnsweredTrue(boolean questionAnsweredTrue) {
+        mQuestionAnsweredTrue = questionAnsweredTrue;
     }
 }

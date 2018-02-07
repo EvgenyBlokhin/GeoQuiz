@@ -9,7 +9,8 @@
     <string name="true_button">Правда</string>
     <string name="false_button">Ложь</string>
     <string name="correct_toast">В точку!</string>
-    <string name="incorrect_toast">Loser =)</string>
+    <string name="incorrect_toast">LoL =)</string>
+    <string name="percentAnswerTrue">0</string>
     <string name="next_button">След.</string>
     <string name="contentDescriptionButtonLeftAndRight">Кнопка - следующий вопрос.</string>
 </resources>
