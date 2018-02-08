@@ -1,9 +1,11 @@
 package ru.uj.geoquiz;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +14,8 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestionTextView;
     private Button mTrueButton;
     private Button mFalseButton;
+    private ImageButton mNextButton;
+    private ImageButton mPrevButton;
     private static final String KEY_INDEX = "index";
     private int mCurrentIndex = 0;
 
@@ -36,6 +40,8 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextView = findViewById(R.id.question_text_view);
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
+        mNextButton = findViewById(R.id.next_button);
+        mPrevButton = findViewById(R.id.prev_button);
         updateQuestion();
     }
 
@@ -105,6 +111,9 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         if (mQuestionBank.length == answeredCount) {
+            //вставить отключение кнопок
+            mNextButton.setEnabled(false);
+            mPrevButton.setEnabled(false);
             int questionTrueAnswerCount = 0;
             for (Question trueAnswer :
                     mQuestionBank) {
@@ -113,7 +122,9 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
             int AnswerTruePercent = (questionTrueAnswerCount * 100) / mQuestionBank.length;
-//           Прочитай статью по инициализации строковых ресурсов из кода
+            Resources res = getResources();
+            String textResult = String.format(res.getString(R.string.result_question), AnswerTruePercent);
+            Toast.makeText(this, textResult, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -121,5 +132,6 @@ public class QuizActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        //savedInstanceState.put
     }
 }

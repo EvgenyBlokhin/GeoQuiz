@@ -10,7 +10,7 @@
     <string name="false_button">Ложь</string>
     <string name="correct_toast">В точку!</string>
     <string name="incorrect_toast">LoL =)</string>
-    <string name="percentAnswerTrue">0</string>
+    <string name="percent_answer_true">0</string>
     <string name="next_button">След.</string>
-    <string name="contentDescriptionButtonLeftAndRight">Кнопка - следующий вопрос.</string>
+    <string name="result_question">Вы ответили правильно на %1$d%% вопросов!</string>
 </resources>
