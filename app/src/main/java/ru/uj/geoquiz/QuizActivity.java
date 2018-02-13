@@ -16,8 +16,11 @@ public class QuizActivity extends AppCompatActivity {
     private Button mFalseButton;
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
-    private static final String KEY_INDEX = "index";
+    private static final String KEY_1 = "index1";
+    private static final String KEY_2 = "index2";
+    private static final String KEY_3 = "index3";
     private int mCurrentIndex = 0;
+    private int mAnsweredCount = 0;
 
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_australia, true, false, false),
@@ -34,7 +37,9 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         if (savedInstanceState != null) {
-            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            mCurrentIndex = savedInstanceState.getInt(KEY_1, 0);
+            mQuestionBank = (Question[]) savedInstanceState.getParcelableArray(KEY_2);
+            mAnsweredCount = savedInstanceState.getInt(KEY_3, 0);
         }
 
         mQuestionTextView = findViewById(R.id.question_text_view);
@@ -43,6 +48,17 @@ public class QuizActivity extends AppCompatActivity {
         mNextButton = findViewById(R.id.next_button);
         mPrevButton = findViewById(R.id.prev_button);
         updateQuestion();
+
+        if (mQuestionBank[mCurrentIndex].isAnswered() == true) {
+            mTrueButton.setEnabled(false);
+            mFalseButton.setEnabled(false);
+        }
+
+        if (mQuestionBank.length == mAnsweredCount) {
+            mNextButton.setEnabled(false);
+            mPrevButton.setEnabled(false);
+        }
+
     }
 
     public void onClickButtonTrue(View view) {
@@ -60,6 +76,9 @@ public class QuizActivity extends AppCompatActivity {
         if (mQuestionBank[mCurrentIndex].isAnswered() == false) {
             mTrueButton.setEnabled(true);
             mFalseButton.setEnabled(true);
+        } else {
+            mTrueButton.setEnabled(false);
+            mFalseButton.setEnabled(false);
         }
     }
 
@@ -73,6 +92,9 @@ public class QuizActivity extends AppCompatActivity {
         if (mQuestionBank[mCurrentIndex].isAnswered() == false) {
             mTrueButton.setEnabled(true);
             mFalseButton.setEnabled(true);
+        } else {
+            mTrueButton.setEnabled(false);
+            mFalseButton.setEnabled(false);
         }
     }
 
@@ -111,9 +133,9 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         if (mQuestionBank.length == answeredCount) {
-            //вставить отключение кнопок
             mNextButton.setEnabled(false);
             mPrevButton.setEnabled(false);
+            mAnsweredCount = answeredCount;
             int questionTrueAnswerCount = 0;
             for (Question trueAnswer :
                     mQuestionBank) {
@@ -131,7 +153,8 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
-        //savedInstanceState.put
+        savedInstanceState.putInt(KEY_1, mCurrentIndex);
+        savedInstanceState.putParcelableArray(KEY_2, mQuestionBank);
+        savedInstanceState.putInt(KEY_3, mAnsweredCount);
     }
 }
