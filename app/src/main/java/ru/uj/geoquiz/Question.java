@@ -12,12 +12,14 @@ public class Question implements Parcelable {
     private boolean mAnswerTrue;
     private boolean mIsAnswered;
     private boolean mQuestionAnsweredTrue;
+    private boolean mIsCheater;
 
-    public Question(int textResId, boolean answerTrue, boolean isAnswered, boolean QuestionAnsweredTrue) {
+    public Question(int textResId, boolean answerTrue, boolean isAnswered, boolean QuestionAnsweredTrue, boolean IsCheater) {
         mTextResId = textResId;
         mAnswerTrue = answerTrue;
         mIsAnswered = isAnswered;
         mQuestionAnsweredTrue = QuestionAnsweredTrue;
+        mIsCheater = IsCheater;
     }
 
     protected Question(Parcel in) {
@@ -82,5 +84,13 @@ public class Question implements Parcelable {
 
     public void setQuestionAnsweredTrue(boolean questionAnsweredTrue) {
         mQuestionAnsweredTrue = questionAnsweredTrue;
+    }
+
+    public boolean isCheater() {
+        return mIsCheater;
+    }
+
+    public void setCheater(boolean cheater) {
+        mIsCheater = cheater;
     }
 }
