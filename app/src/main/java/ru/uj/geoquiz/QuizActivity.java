@@ -24,6 +24,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_CHEAT = 0;
     private int mCurrentIndex = 0;
     private int mAnsweredCount = 0;
+    static int mCountCheat = 3;
     private Question[] mQuestionBank;
 
     public QuizActivity() {
