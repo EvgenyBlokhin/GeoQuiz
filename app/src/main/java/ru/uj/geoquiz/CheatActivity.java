@@ -22,6 +22,8 @@ public class CheatActivity extends AppCompatActivity {
     private Button mShowAnswerButton;
     private TextView mAnswerTextView;
     private TextView mCheaterCountText;
+    int count;
+    boolean showAnswer;
 
     public static boolean wasAnswerShown(Intent result) {
         return result.getBooleanExtra(EXTRA_ANSWER_SHOWN, false);
@@ -37,13 +39,24 @@ public class CheatActivity extends AppCompatActivity {
         mCheaterCountText = findViewById(R.id.cheater_count_text);
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
 
+        count = getIntent().getIntExtra("cheatCount1", 0);
+
         if (savedInstanceState != null) {
-            QuizActivity.mCountCheat = savedInstanceState.getInt(KEY_4, 0);
+            count = savedInstanceState.getInt(KEY_4, 0);
+            if (savedInstanceState.containsKey("show")) {
+                showAnswer = savedInstanceState.getBoolean("show");
+                if (showAnswer) {
+                    Intent data = new Intent();
+                    data.putExtra("cheatCount2", count);
+                    setResult(RESULT_OK, data);
+                }
+            }
+
         }
 
         setCountCheatText();
 
-        if (QuizActivity.mCountCheat <= 0) {
+        if (count == 0) {
             mShowAnswerButton.setEnabled(false);
         }
     }
@@ -55,10 +68,10 @@ public class CheatActivity extends AppCompatActivity {
     }
 
     public void onClickShowAnswer(View view) {
-        QuizActivity.mCountCheat--;
+        count--;
         setCountCheatText();
 
-        if (QuizActivity.mCountCheat <= 0) {
+        if (count == 0) {
             mShowAnswerButton.setEnabled(false);
         }
         if (mAnswerIsTrue) {
@@ -87,20 +100,23 @@ public class CheatActivity extends AppCompatActivity {
     }
 
     private void setAnswerShownResult(boolean isAnswerShown) {
+        showAnswer = isAnswerShown;
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
+        data.putExtra("cheatCount2", count);
         setResult(RESULT_OK, data);
     }
 
     private void setCountCheatText() {
         Resources res = getResources();
-        String countCheat = String.format(res.getString(R.string.count_cheat, QuizActivity.mCountCheat), QuizActivity.mCountCheat);
+        String countCheat = String.format(res.getString(R.string.count_cheat, count), count);
         mCheaterCountText.setText(countCheat);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_4, QuizActivity.mCountCheat);
+        outState.putInt(KEY_4, count);
+        outState.putBoolean("show", showAnswer);
     }
 }

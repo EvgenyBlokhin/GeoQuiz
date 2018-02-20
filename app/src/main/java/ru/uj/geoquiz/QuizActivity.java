@@ -21,10 +21,11 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_1 = "index1";
     private static final String KEY_2 = "index2";
     private static final String KEY_3 = "index3";
-    private static final int REQUEST_CODE_CHEAT = 0;
+    private static final String KEY_5 = "index5";
+    private static final int REQUEST_CODE_CHEAT = 1;
     private int mCurrentIndex = 0;
     private int mAnsweredCount = 0;
-    static int mCountCheat = 3;
+    private int mCountCheat = 3;
     private Question[] mQuestionBank;
 
     public QuizActivity() {
@@ -47,6 +48,7 @@ public class QuizActivity extends AppCompatActivity {
             mCurrentIndex = savedInstanceState.getInt(KEY_1, 0);
             mQuestionBank = (Question[]) savedInstanceState.getParcelableArray(KEY_2);
             mAnsweredCount = savedInstanceState.getInt(KEY_3, 0);
+            mCountCheat = savedInstanceState.getInt(KEY_5, 0);
         }
 
         mQuestionTextView = findViewById(R.id.question_text_view);
@@ -167,11 +169,13 @@ public class QuizActivity extends AppCompatActivity {
         savedInstanceState.putInt(KEY_1, mCurrentIndex);
         savedInstanceState.putParcelableArray(KEY_2, mQuestionBank);
         savedInstanceState.putInt(KEY_3, mAnsweredCount);
+        savedInstanceState.putInt(KEY_5, mCountCheat);
     }
 
     public void onClickCheat(View view) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
         Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
+        intent.putExtra("cheatCount1", mCountCheat);
         startActivityForResult(intent, REQUEST_CODE_CHEAT);
     }
 
@@ -183,7 +187,7 @@ public class QuizActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CHEAT) {
             if (data == null)
                 return;
-
+            mCountCheat = data.getIntExtra("cheatCount2", 3);
             mQuestionBank[mCurrentIndex].setCheater(CheatActivity.wasAnswerShown(data));
         }
     }
