@@ -68,6 +68,23 @@ public class QuizActivity extends AppCompatActivity {
             mPrevButton.setEnabled(false);
         }
 
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
+
+                if (mQuestionBank[mCurrentIndex].isAnswered() == false) {
+                    mTrueButton.setEnabled(true);
+                    mFalseButton.setEnabled(true);
+                } else {
+                    mTrueButton.setEnabled(false);
+                    mFalseButton.setEnabled(false);
+                }
+            }
+        });
+
     }
 
     public void onClickButtonTrue(View view) {
